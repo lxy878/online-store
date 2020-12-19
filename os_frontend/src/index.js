@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// eslint-disable-next-line 
+import Provider from 'react-redux'
+// eslint-disable-next-line 
+import {createStore} from 'redux'
+
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
