@@ -6,16 +6,21 @@ export default class User extends React.Component{
     constructor(){
         super()
         this.state = {
-            email: '',
-            name: '',
-            password: '',
+            user: {
+                email: '',
+                name: '',
+                password: ''
+            },
             redirect: null
         }
     }
 
     handleChange = e =>{
         this.setState({
-            [e.target.name]: e.target.value
+            user:{
+                ...this.state.user,
+                [e.target.name]: e.target.value
+            }
         })
     }
 
@@ -26,7 +31,15 @@ export default class User extends React.Component{
 
     handleSubmit2 = e => {
         e.preventDefault()
-        console.log(this.state)
+        fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({user: this.state.user})
+        })
+        .then(resp=> resp.json())
+        .then(json => console.log(json))
         this.setState({
             redirect: '/'
         })
@@ -44,21 +57,22 @@ export default class User extends React.Component{
                 <div>
                     <h3>Log In</h3>
                     <form onSubmit={this.handleSubmit1}>
-                        <input type='email' name='email' onChange={this.handleChange} value={this.state.email}/>
-                        <input type='password' name='password' onChange={this.handleChange} value={this.state.password}/>
+                        <input type='email' name='email' onChange={this.handleChange} value={this.state.user.email}/>
+                        <input type='password' name='password' onChange={this.handleChange} value={this.state.user.password}/>
                         <input type='submit' />
                     </form>
                 </div>
                 <div>
                     <h3>Register</h3>
                     <form onSubmit={this.handleSubmit2}>
-                        <input type='email' name='email' onChange={this.handleChange} value={this.state.email}/>
-                        <input type='text' name='name' onChange={this.handleChange} value={this.state.name}/>
-                        <input type='password' name='password' onChange={this.handleChange} value={this.state.password}/>
+                        <input type='email' name='email' onChange={this.handleChange} value={this.state.user.email}/>
+                        <input type='text' name='name' onChange={this.handleChange} value={this.state.user.name}/>
+                        <input type='password' name='password' onChange={this.handleChange} value={this.state.user.password}/>
                         <input type='submit' />
                     </form>
                 </div>
-                {this.redirect()}
+                {/* {this.redirect()} */}
+                <p name='status'>Log Out</p>
             </div>
         )
     }

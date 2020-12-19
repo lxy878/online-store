@@ -6,7 +6,7 @@ import {
     Link
   } from "react-router-dom";
 
-import User from '../containers/user.js'
+import User from './containers/user.js'
 
 export default function routes() {
     return (
@@ -26,15 +26,11 @@ export default function routes() {
             </ul>
             </nav>
             <Switch>
-                <Route path="/" render={()=><h2>Home</h2>}>
-                    <About />
-                </Route>
-                <Route exact path="/user">
+                <Route exact path="/" render={()=><h2>Home</h2>}/>
+                <Route path="/user">
                     <User />
                 </Route>
-                <Route path="/about" render={()=> <h2>about</h2>}>
-                    <Home />
-                </Route>
+                <Route path="/about" render={()=> <h2>About</h2>}/>
             </Switch>
         </div>
         </Router>
