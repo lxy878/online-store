@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: {:response => 'log in'}.to_json
+    render json: {:response => 'logged in'}.to_json
   end
 
   def edit

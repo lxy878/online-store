@@ -4,6 +4,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:user][:password])
       token = token_create({id: user.id})
       render json: {uid: token}.to_json
+    else
+      render json: {errors: 'Log in failed'}.to_json
     end
   end
 

@@ -14,7 +14,8 @@ export default class User extends React.Component{
                 password: ''
             },
             redirect: null,
-            uid: ''
+            uid: '',
+            errors: ''
         }
     }
 
@@ -35,7 +36,7 @@ export default class User extends React.Component{
             body: JSON.stringify({user: this.state.user})
         })
         .then(resp=>resp.json())
-        .then(json=>console.log(json))
+        .then(json=>this.renderUser(json))
         // condition: uid existed and not
         // if yes, set uid and redirect to user page
         // otherwise, errors and re-enter
@@ -49,13 +50,24 @@ export default class User extends React.Component{
             body: JSON.stringify({user: this.state.user})
         })
         .then(resp=> resp.json())
-        .then(json => console.log(json))
+        .then(json => this.renderUser(json))
         // condition: uid existed and not
         // if yes, set uid and redirect to user page
         // otherwise, show errors and re-enter
         this.setState({
             redirect: '/'
         })
+    }
+
+    renderUser = (json) =>{
+        if (json.uid){
+            this.setState({uid: json.uid})
+            document.querySelector('p[name=status]').innerText = 'logged'
+        }
+        else{
+            this.setState({errors: json.errors})
+            document.querySelector('p[name=status]').innerText = 'log failed'
+        }
     }
 
     redirect = () => {

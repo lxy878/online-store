@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
     
     private
     def authentication_required
-        render json: {errors: 'Log In failed'}.to_json if !log_in?
+        render json: {errors: 'authentication failed'}.to_json if !log_in?
     end
 
     def log_in?
