@@ -1,6 +1,8 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
+const baseUrl = 'http://localhost:3000'
+
 export default class User extends React.Component{
     // separate register and log in
     constructor(){
@@ -11,7 +13,8 @@ export default class User extends React.Component{
                 name: '',
                 password: ''
             },
-            redirect: null
+            redirect: null,
+            uid: ''
         }
     }
 
@@ -26,20 +29,30 @@ export default class User extends React.Component{
 
     handleSubmit1 = e => {
         e.preventDefault()
-        console.log(this.state)
+        fetch(`${baseUrl}/login`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({user: this.state.user})
+        })
+        .then(resp=>resp.json())
+        .then(json=>console.log(json))
+        // condition: uid existed and not
+        // if yes, set uid and redirect to user page
+        // otherwise, errors and re-enter
     }
 
     handleSubmit2 = e => {
         e.preventDefault()
-        fetch('http://localhost:3000/users', {
+        fetch(`${baseUrl}/users`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({user: this.state.user})
         })
         .then(resp=> resp.json())
         .then(json => console.log(json))
+        // condition: uid existed and not
+        // if yes, set uid and redirect to user page
+        // otherwise, show errors and re-enter
         this.setState({
             redirect: '/'
         })

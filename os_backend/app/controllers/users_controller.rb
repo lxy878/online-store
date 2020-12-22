@@ -1,13 +1,14 @@
 class UsersController < ApplicationController
 
-  # def index
-  #   users = User.all
-  #   render json: users.to_json()
-  # end
+  before_action :authentication_required, only: [:show, :edit, :update]
 
   def create
     newUser = User.new(user_params)
-    render json: newUser.save ? newUser.to_json : 'failed'.to_json
+    if newUser.save
+      render json: {uid: token_create(newUser.id)}.to_json
+    else
+      render json: {error: newUser.errors.full_messages}.to_json
+    end
   end
 
   def show
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    # render current user data
   end
 
   def update
