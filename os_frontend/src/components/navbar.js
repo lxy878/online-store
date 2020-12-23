@@ -12,8 +12,8 @@ export default function navbar () {
             <Nav className="mr-auto">
                 <Nav.Link href="/">Products</Nav.Link>
                 <NavDropdown title='User' id='basic-nav-dropdown'>
-                    <NavDropdown.Item href='/user'>Log In</NavDropdown.Item>
-                    <NavDropdown.Item href='/'>Register</NavDropdown.Item>
+                    <NavDropdown.Item href='/login'>Log In</NavDropdown.Item>
+                    <NavDropdown.Item href='/register'>Register</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
         </Navbar>
