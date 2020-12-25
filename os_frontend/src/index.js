@@ -4,16 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// eslint-disable-next-line 
-import Provider from 'react-redux'
-// eslint-disable-next-line 
+import {Provider} from 'react-redux'
 import {createStore} from 'redux'
+import userReducer from './reducers/userReducer.js'
 
+const store = createStore(userReducer)
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
