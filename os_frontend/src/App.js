@@ -1,22 +1,22 @@
 import './App.css';
 import React from 'react'
-import Routes from './routes.js'
-import Navbar from './components/navbar'
-// bootstrap
-import Container from 'react-bootstrap/Container';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
+import UserContainer from './containers/userContainer.js'
+import GuestContainer from './containers/guestContainer.js'
 
-function App() {
-  return (
-    <>
-      <Navbar /> 
-      <Container fluid>
-        <Routes /> 
-      </Container>
+class App extends React.Component {
+  state = {logged: false}
 
-    </>
-  );
+  reload = (accountStatus) =>{
+        this.setState({logged: accountStatus})
+    }
+
+    isLogged = () => localStorage.getItem('uid') ? <UserContainer reload={this.reload}/> : <GuestContainer reload={this.reload}/>
+
+    render(){  
+        return(<>{this.isLogged()}</>);
+    }
 }
 
 export default App;
