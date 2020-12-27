@@ -11,7 +11,7 @@ export default class Register extends React.Component{
             name: '',
             password: ''
         },
-        redirect: null, // redirect to user info
+        redirect: null, // redirect to products
         uid: '',     // fix: redux
         errors: ''  //fix: remove
     }
@@ -40,8 +40,9 @@ export default class Register extends React.Component{
     renderUser = (json) =>{
         if (json.uid){
             // fix: redux
-            this.setState({uid: json.uid})
+            localStorage.setItem('uid', json.uid)
             document.querySelector('p[name=status]').innerText = 'logged'
+            this.setState({redirect: '/'})
         }
         else{
             this.setState({errors: json.errors})
@@ -67,7 +68,7 @@ export default class Register extends React.Component{
                     <input type='password' name='password' onChange={this.handleChange} value={this.state.user.password}/>
                     <input type='submit' />
                 </form>
-                    {/* {this.redirect()} */}
+                    {this.redirect()}
                 <p name='status'>Log Out</p>
             </div>
             

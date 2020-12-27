@@ -10,7 +10,7 @@ export default class Login extends React.Component{
             email: '',
             password: ''
         },
-        redirect: null, // redirect to user info
+        redirect: null, // redirect to products
         uid: '',     // fix: redux
         errors: ''  //fix: remove
     }
@@ -39,8 +39,9 @@ export default class Login extends React.Component{
     renderUser = (json) =>{
         if (json.uid){
             // fix: redux
-            this.setState({uid: json.uid})
+            localStorage.setItem('uid', json.uid)
             document.querySelector('p[name=status]').innerText = 'logged'
+            this.setState({redirect: '/'})
         }
         else{
             this.setState({errors: json.errors})
@@ -57,17 +58,17 @@ export default class Login extends React.Component{
 
     render(){
         return(
-            <div>
-                <h3>Register</h3>
+            <>
+                <h3>Log In</h3>
                 {/* fix: to stateless */}
                 <form onSubmit={this.handleSubmit}>
                     <input type='email' name='email' onChange={this.handleChange} value={this.state.user.email}/>
                     <input type='password' name='password' onChange={this.handleChange} value={this.state.user.password}/>
                     <input type='submit' />
                 </form>
-                    {/* {this.redirect()} */}
+                    {this.redirect()}
                 <p name='status'>Log Out</p>
-            </div>
+            </>
             
         )
     }
