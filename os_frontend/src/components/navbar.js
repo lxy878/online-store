@@ -1,7 +1,8 @@
 import React from 'react'
-import {Navbar, NavDropdown, Nav, Figure} from 'react-bootstrap';
+import {Navbar, Nav, Figure} from 'react-bootstrap';
 
-export default function navbar () {
+import Navdropdown from './navDropdown.js'
+export default function navbar ({dropdownItems}) {
     return (
         <>
         <Navbar bg="dark" variant="dark">
@@ -11,10 +12,7 @@ export default function navbar () {
             </Figure>
             <Nav className="mr-auto">
                 <Nav.Link href="/">Products</Nav.Link>
-                <NavDropdown title='User' id='basic-nav-dropdown'>
-                    <NavDropdown.Item href='/login'>Log In</NavDropdown.Item>
-                    <NavDropdown.Item href='/register'>Register</NavDropdown.Item>
-                </NavDropdown>
+                <Navdropdown dropdownItems={dropdownItems}/>
             </Nav>
         </Navbar>
         <br />
