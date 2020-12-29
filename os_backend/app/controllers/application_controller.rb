@@ -1,18 +1,17 @@
 class ApplicationController < ActionController::API
     
     private
-    def authentication_required
-        render json: {errors: 'authentication failed'}.to_json if !log_in?
-    end
+    # def authentication_required
+    #     render json: {errors: 'authentication failed'}.to_json if !log_in?
+    # end
 
     def log_in?
         !!current_user    
     end
 
     def current_user
-        data = params[:user] ? token_decode(params[:user][:token]) : nil
-        byebug
-        User.find_by(data) if data
+        data ||= token_decode(request.headers[:Authorization])
+        @current_user = User.find_by(data[0]) if data
     end
 
     def secret_key
@@ -24,7 +23,7 @@ class ApplicationController < ActionController::API
     end
 
     def token_decode(token)
-        JWT.decode(token, secret_key, true, {algorithm: 'HS256'})
+        JWT.decode(token, secret_key, true, {algorithm: 'HS256'}) if token
     end
     
 end

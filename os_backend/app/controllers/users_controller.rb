@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :authentication_required, only: [:show, :edit, :update]
+  # before_action :authentication_required, only: [:show, :edit, :update]
 
   def create
     newUser = User.new(user_params)
@@ -11,15 +11,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    render json: {:response => 'logged in'}.to_json
-  end
-
-  def edit
-    # render current user data
-  end
 
   def update
+    if log_in? && @current_user.update(user_params)
+      render json: {user: @current_user}.to_json
+    else
+      render json: {errors: 'Update Failed'}.to_json
+    end
   end
 
   private
