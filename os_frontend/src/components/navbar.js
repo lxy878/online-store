@@ -11,7 +11,7 @@ export default function navbar ({dropdownItems}) {
             {/* <Figure.Image width={171} height={180} alt="171x180" src="holder.js/171x180"/> */}
             </Figure>
             <Nav className="mr-auto">
-                <Nav.Link href="/">Products</Nav.Link>
+                <Nav.Link href="/products">Products</Nav.Link>
                 <Navdropdown dropdownItems={dropdownItems}/>
             </Nav>
         </Navbar>
