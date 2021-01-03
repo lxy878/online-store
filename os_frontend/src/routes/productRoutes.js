@@ -4,6 +4,8 @@ import ProductsContainer from '../containers/productsContainer.js'
 
 export default function routes({reload}) {
     return (
-        <><Route exact path="/"><ProductsContainer reload={reload}/></Route></>
+        <>
+            <Route path="/products" render={routerProps=> <ProductsContainer {...routerProps} reload={reload}/>}/>
+        </>
     );
 }
