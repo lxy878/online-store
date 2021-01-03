@@ -41,7 +41,7 @@ export default class Login extends React.Component{
             // fix: redux
             localStorage.setItem('uid', json.uid)
             document.querySelector('p[name=status]').innerText = 'logged'
-            this.setState({redirect: '/'})
+            this.setState({redirect: '/products'})
         }
         else{
             this.setState({errors: json.errors})

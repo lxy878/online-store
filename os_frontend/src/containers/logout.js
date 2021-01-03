@@ -5,7 +5,7 @@ export default class Logout extends React.Component{
     state = {redirect: null}
     componentDidMount(){
         localStorage.clear()
-        this.setState({redirect: '/'})
+        this.setState({redirect: '/products'})
     }
 
     redirect = () =>{

@@ -39,7 +39,7 @@ export default class userInfo extends React.Component {
                 <p>Number of Orders: {this.state.user.nOrders}</p>
                 <p>Number of Products: {this.state.user.nProducts}</p>
                 <Button variant='dark' href='/user/edit'>Edit User Information</Button>{' '}
-                <Button variant='dark'>View Products</Button>{' '}
+                <Button variant='dark' href='/user/products'>View Products</Button>{' '}
                 <Button variant='dark'>View Orders</Button>
             </div>
         )
