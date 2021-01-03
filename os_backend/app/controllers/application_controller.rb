@@ -10,6 +10,7 @@ class ApplicationController < ActionController::API
     end
 
     def current_user
+        # byebug
         data ||= token_decode(request.headers[:Authorization])
         @current_user = User.find_by(data[0]) if data
     end
