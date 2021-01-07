@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
 
-export default class userInfo extends React.Component {
+class UserInfo extends React.Component {
     state ={
         user: {
             name: 'Nobody',
@@ -45,3 +45,5 @@ export default class userInfo extends React.Component {
         )
     }
 }
+
+export default UserInfo

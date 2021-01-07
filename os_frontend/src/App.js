@@ -3,9 +3,10 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter as Router} from 'react-router-dom'
 
-import UserContainer from './containers/userContainer.js'
+import UserContainer from './containers/user/userContainer.js'
 import GuestContainer from './containers/guestContainer.js'
 
+// fix: reload with redux
 class App extends React.Component {
   state = {logged: false}
 

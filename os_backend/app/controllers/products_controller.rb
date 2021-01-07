@@ -17,13 +17,14 @@ class ProductsController < ApplicationController
         # byebug
         if log_in?
             newProduct = @current_user.products.new(product_params)
+            # byebug
             if newProduct.save
                 render json: {product: newProduct}.to_json
             else
-                render json: {error: newProduct.errors}.to_json
+                render json: {errors: newProduct.errors.full_messages}.to_json
             end
         else
-            render json: {error: 'access failed'}.to_json
+            render json: {errors: 'Unauthorized'}.to_json
         end
     end
 

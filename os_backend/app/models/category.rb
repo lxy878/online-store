@@ -1,4 +1,5 @@
 class Category < ApplicationRecord
     has_many :products
-    validates :name, uniqueness: true, presence: true
+    # add uniqueness
+    validates :name, presence: true
 end

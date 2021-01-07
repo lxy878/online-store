@@ -1,9 +1,7 @@
 import React from 'react'
-import Navbar from '../components/navbar'
-import UserRoutes from '../routes/userRoutes.js'
-
-// bootstrap
 import Container from 'react-bootstrap/Container'
+import Navbar from '../../components/navbar'
+import UserRoutes from '../../routes/userRoutes.js'
 
 export default class UserContainer extends React.Component{
     state={
