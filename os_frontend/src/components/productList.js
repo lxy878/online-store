@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function productList ({baseUrl, products}) {
+export default function ProductList ({baseUrl, products}) {
+    // debugger
     const renderProducts = Object.keys(products).map(productId => 
-       <li key={productId}><Link to={`${baseUrl}/${productId}`} >{products[productId].name}</Link></li>
+       <li key={productId}><Link to={`${baseUrl}/${productId}`} >{products[productId].name}</Link> <button>X</button></li>
     )
     return (<>
         {renderProducts}
