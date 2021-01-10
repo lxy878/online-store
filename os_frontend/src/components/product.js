@@ -1,30 +1,31 @@
 import React from 'react'
-// eslint-disable-next-line
-import ProductModal from './productForm.js'
 
 export default function Product({match, products}){
-    let product
-
     const renderProduct = () => {
         if (products.length > 0){
-            product = products[match.params.productId]
-            return (<>
-               <h3>{product.name}</h3>
-               <p>Category: {product.category}</p>
-               <p>Price: ${product.price}</p>
-               <p>Qty: {product.qty}</p>
-               <p>Description: {product.description}</p>
-               <button>Order</button> <button>Edit</button>
-            </>)
+            console.log('product render')
+            const product = products[match.params.productId]
+            return product ? productInfo(product) : <></>
         }else return (<></>)
 
     }
 
+    const productInfo = product => {
+        return (
+            <>
+               <h3>{product.name}</h3> 
+               <p>Category: {product.category.name}</p>
+               <p>Price: ${product.price}</p>
+               <p>Qty: {product.qty}</p>
+               <p>Description: {product.description}</p>
+               <button>Order</button>
+            </>
+        )
+    }
 
     return (
         <div>
            {renderProduct()}
-           {/* <ProductModal product={product} handles={handles}/> */}
         </div>
         )
     

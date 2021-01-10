@@ -2,15 +2,23 @@ import React, { useState } from 'react'
 import {Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux'
 
-import {addProduct} from '../actions/productActions'
+import {addProduct, updateProduct} from '../actions/productActions'
 
 function ProductForm(props){
     const [show, setShow] = useState(false)
-    const [product, setProduct] = useState(props.product)
-
     const handleClose = () => setShow(false)
-
     const handleShow = () => setShow(true)
+
+    // restore existing data to submit form
+    const reformedData = Object.keys(props.product).reduce((acc, key)=> {
+        return key === 'category' ?
+            {...acc, [`${key}_attributes`]: props.product[key]}
+            : {...acc, [key]:props.product[key]}
+    }, {})
+    
+    const [product, setProduct] = useState(reformedData)
+
+    const buttonText = product.id ? 'Edit' : 'Create'
 
     const handleChange = e => {
         const value = (e.target.name === 'category_attributes') ? {name: e.target.value} : e.target.value
@@ -21,11 +29,16 @@ function ProductForm(props){
     }
     
     const handleSubmit = () => {
-        props.addProduct(product)
+        if (buttonText === 'Edit'){
+            props.updateProduct(product)
+        }else{
+            props.addProduct(product)
+
+        }
+        setProduct(reformedData)
         handleClose()
     }
 
-    const buttonText = product.id ? 'Edit' : 'Create'
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
@@ -60,7 +73,8 @@ function ProductForm(props){
 
 const mapDispatchToProps = dispatch => {
     return {
-        addProduct: formData => dispatch(addProduct(formData))
+        addProduct: formData => dispatch(addProduct(formData)),
+        updateProduct: formData => dispatch(updateProduct(formData))
     }
 }
 

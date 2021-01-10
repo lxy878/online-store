@@ -1,24 +1,13 @@
 export default function productReducer(state={products:[], product: {}}, action){
+    let productIndex = null
+
     switch(action.type){
-        case 'START_ADDING_PRODUCTS_REQUEST':
-            return {
-                ...state, 
-                products: [...state.products],
-                requesting: true
-            }
 
         case 'FETCH_PRODUCTS':
             return {
                 ...state,
                 products: action.products,
                 requesting: false
-            }
-
-        case 'START_ADDING_PRODUCT_REQUEST':
-            return {
-                ...state,
-                product: {...state.product},
-                requesting: true
             }
 
         case 'ADD_PRODUCT':
@@ -29,11 +18,18 @@ export default function productReducer(state={products:[], product: {}}, action)
             }
 
         case 'UPDATE_PRODUCT':
-            debugger
-            const productIndex = state.products.findIndex(product=> product.id === action.product.id)
+            productIndex = state.products.findIndex(product=> product.id === action.product.id)
             return {
                 ...state,
-                products: [...state.products.slice(productIndex-1), action.product, ...state.products.slice(productIndex+1)],
+                products: [...state.products.slice(0, productIndex), action.product, ...state.products.slice(productIndex+1)],
+                requesting: false
+            }
+
+        case 'DELETE_PRODUCT':
+            productIndex = state.products.findIndex(product=> product.id === action.product.id)
+            return {
+                ...state,
+                products: [...state.products.slice(0, productIndex), ...state.products.slice(productIndex+1)],
                 requesting: false
             }
 

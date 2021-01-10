@@ -1,8 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
-import {fetchProducts} from '../actions/productActions'
-
 import { Route} from 'react-router-dom'
 
 import ProductList from '../components/productList.js'
@@ -15,11 +12,10 @@ class ProductsContainer extends React.Component{
             this.props.reload(true)
         else
             this.props.reload(false)
-
-        this.props.fetchProducts(this.props.url)
     }
 
     render(){
+        console.log('product container render')
         return (
             <>
                 <ul><ProductList baseUrl={this.props.url} products={this.props.products}/></ul>
@@ -28,14 +24,8 @@ class ProductsContainer extends React.Component{
         )
     }
 }
-
-const mapDispatchToProps = dispatch =>{
-    return {
-        fetchProducts: (url) => dispatch(fetchProducts(url))
-    }
-}
 const mapStateToProps = state => {
-    return {products: state.products}
+    return {products: state.productReducer.products}
 } 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer)
+export default connect(mapStateToProps)(ProductsContainer)

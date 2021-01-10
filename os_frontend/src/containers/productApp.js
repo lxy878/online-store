@@ -1,6 +1,9 @@
 import React from 'react'
+import {connect} from 'react-redux'
+
 import ProductForm from '../components/productForm.js'
 import ProductsContainer from './productsContainer.js'
+import {fetchProducts} from '../actions/productActions'
 
 class ProductApp extends React.Component{
     state = {
@@ -13,7 +16,12 @@ class ProductApp extends React.Component{
         }
     }
 
+    componentDidMount(){
+        this.props.fetchProducts(this.props.match.url)   
+    }
+
     render(){
+        console.log('product app render')
         return (
             <>
             <h1>Products</h1>
@@ -24,5 +32,6 @@ class ProductApp extends React.Component{
     }
 }
 
+const mapDispatchToProps = dispatch => ({fetchProducts: (url) => dispatch(fetchProducts(url))})
 
-export default ProductApp
+export default connect(null, mapDispatchToProps)(ProductApp)

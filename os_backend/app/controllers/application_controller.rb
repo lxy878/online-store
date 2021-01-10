@@ -1,16 +1,17 @@
 class ApplicationController < ActionController::API
     
     private
-    # def authentication_required
-    #     render json: {errors: 'authentication failed'}.to_json if !log_in?
-    # end
+    def authorization_required
+        if !log_in?
+            render json: {errors: 'authorization failed'}.to_json
+        end
+    end
 
     def log_in?
         !!current_user    
     end
 
     def current_user
-        # byebug
         data ||= token_decode(request.headers[:Authorization])
         @current_user = User.find_by(data[0]) if data
     end
