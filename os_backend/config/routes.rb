@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   post 'users/update' => 'users#update'
   resources :users, only: [:create]
   resources :products, only: [:index, :create, :update, :destroy]
-  resources :orders, only: [:index, :destroy]
+  resources :orders, only: [:index, :destroy, :create]
 end

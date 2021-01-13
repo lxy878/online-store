@@ -40,7 +40,7 @@ class UserInfo extends React.Component {
                 <p>Number of Products: {this.state.user.nProducts}</p>
                 <Button variant='dark' href='/user/edit'>Edit User Information</Button>{' '}
                 <Button variant='dark' href='/user/products'>View Products</Button>{' '}
-                <Button variant='dark'>View Orders</Button>
+                <Button variant='dark' href='/user/orders'>View Orders</Button>
             </div>
         )
     }

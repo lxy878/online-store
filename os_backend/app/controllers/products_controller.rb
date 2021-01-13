@@ -4,9 +4,11 @@ class ProductsController < ApplicationController
     def index
         if log_in?
             products = @current_user.products
+            # add number of ordered product
             render json: products.to_json(json_option)
         else
             products = Product.all
+            # orders remove
             render json: products.to_json(json_option)
         end
     end
@@ -48,6 +50,6 @@ class ProductsController < ApplicationController
     end
 
     def json_option
-        {include: {category: {only: [:name]}}, except: [:user_id, :category_id]}
+        {include: {category: {only: [:name]}, orders: {only: [:qty]}}, except: [:user_id, :category_id, :created_at, :updated_at]}
     end
 end

@@ -19,7 +19,8 @@ ActiveRecord::Schema.define(version: 2020_12_30_011739) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "qty"
+    t.integer "qty"
+    t.decimal "amount"
     t.integer "product_id"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false

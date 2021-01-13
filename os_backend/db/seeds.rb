@@ -60,16 +60,18 @@ products = [
 ]
 
 products.each{|product| Product.create(product)}
+prices = Product.all.map{|product| product.price}
+
 
 products = Product.all
 orders = [
-    {qty: 1, user:users[3], product: products[3]},
-    {qty: 1, user:users[3], product: products[1]},
-    {qty: 1, user:users[3], product: products[0]},
-    {qty: 1, user:users[3], product: products[0]},
-    {qty: 10, user:users[3], product: products[3]},
-    {qty: 2, user:users[1], product: products[3]},
-    {qty: 10, user:users[2], product: products[3]},
-    {qty: 2, user:users[2], product: products[3]}
+    {qty: 1, user:users[3], product: products[3], amount: prices[3]*1},
+    {qty: 1, user:users[3], product: products[1], amount: prices[1]*1},
+    {qty: 1, user:users[3], product: products[0], amount: prices[0]},
+    {qty: 1, user:users[3], product: products[0], amount: prices[0]*1},
+    {qty: 10, user:users[3], product: products[3], amount: prices[3]*10},
+    {qty: 2, user:users[1], product: products[3], amount: prices[3]*2},
+    {qty: 10, user:users[2], product: products[3], amount: prices[3]*10},
+    {qty: 2, user:users[2], product: products[3], amount: prices[3]*2}
 ]
 orders.each{|order| Order.create(order)}
