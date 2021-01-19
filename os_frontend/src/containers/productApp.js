@@ -22,13 +22,11 @@ class ProductApp extends React.Component{
 
     render(){
         console.log('product app render')
-        return (
-            <>
+        return (<>
             <h1>Products</h1>
-            <ProductForm product={this.state.newProduct}/>
+            { this.props.match.url === '/user/products' ? <ProductForm product={this.state.newProduct}/> : <></> }
             <ProductsContainer url={this.props.match.url} reload={this.props.reload}/>
-            </>
-        )
+        </>)
     }
 }
 

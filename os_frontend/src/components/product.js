@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Figure, Col, Row, Button} from 'react-bootstrap'
 
 import {deleteProduct} from '../actions/productActions'
 import ProductForm from './productForm'
@@ -21,11 +22,20 @@ function Product(props){
     const productInfo = product => {
         return (
             <>
-               <h3>{product.name}</h3> 
-               {renderButtons(product)}
-               <p>Category: {product.category.name}</p>
-               <p>Price: ${product.price}</p>
-               <p>Qty: {product.qty}</p>
+               <h3>{product.name}</h3>
+               <Row>
+                <Col sm={7}>
+                        <Figure>
+                            <Figure.Image width={500} height={530} src='https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png'/>
+                        </Figure>
+                </Col>
+                <Col sm={5}>
+                        <p>Category: {product.category.name}</p>
+                        <p>Price: ${product.price}</p>
+                        <p>Qty: {product.qty}</p>
+                        {renderButtons(product)}
+                </Col>
+               </Row>
                <p>Description: {product.description}</p>
             </>
         )
@@ -36,7 +46,7 @@ function Product(props){
             const totalOrders = product.orders.reduce((sum, order) => sum+order.qty, 0)
             return (<><button onClick={()=> deleteProduct(product)}>Delete</button>
                 <ProductForm product={product}/>
-                <button disabled>Ordered {totalOrders}</button>
+                <Button disabled>Ordered {totalOrders}</Button>
             </>)
         }else{
             return <><OrderForm addOrder={props.addOrder} product={product}/></>

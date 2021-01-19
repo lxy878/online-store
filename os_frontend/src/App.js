@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter as Router} from 'react-router-dom'
+import './App.css'
 
 import UserContainer from './containers/user/userContainer.js'
 import GuestContainer from './containers/guestContainer.js'

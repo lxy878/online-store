@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { Route} from 'react-router-dom'
+import {Col, Row} from 'react-bootstrap'
 
-import ProductList from '../components/productList.js'
-import Product from '../components/product.js'
+import ProductList from '../components/productList'
+import Product from '../components/product'
 
 class ProductsContainer extends React.Component{
 
@@ -18,8 +19,14 @@ class ProductsContainer extends React.Component{
         console.log('product container render')
         return (
             <>
-                <ul><ProductList baseUrl={this.props.url} products={this.props.products}/></ul>
-                <Route path={`${this.props.url}/:productId`} render={routerProps=> <Product {...routerProps} products={this.props.products}/>}/>
+                <Row>
+                    <Col sm={3}>
+                        <ul><ProductList baseUrl={this.props.url} products={this.props.products}/></ul>
+                    </Col>
+                    <Col sm={9}>
+                        <Route path={`${this.props.url}/:productId`} render={routerProps=> <Product {...routerProps} products={this.props.products}/>}/>
+                    </Col>
+                </Row>
             </>
         )
     }
