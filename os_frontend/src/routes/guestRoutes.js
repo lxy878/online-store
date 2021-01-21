@@ -9,8 +9,8 @@ export default function routes({reload}) {
     return (
         <>
             <ProductRoutes reload={reload}/>
-            <Route path="/login"><Login/></Route>
-            <Route path='/register'><Register/></Route>
+            <Route path="/login" render={routerProps => <Login {...routerProps} />} />
+            <Route path='/register' render={routerProps => <Register {...routerProps} />} />
         </>
     );
 }
