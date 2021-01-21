@@ -1,75 +1,36 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-const baseUrl = 'http://localhost:3000' //fix: redux
+import {connect} from 'react-redux'
+import UserForm from '../components/userForm'
 
-export default class Login extends React.Component{
-    
+class Login extends React.Component{
     state = {
         user: {
             email: '',
             password: ''
-        },
-        redirect: null, // redirect to products
-        uid: '',     // fix: redux
-        errors: ''  //fix: remove
+        }
     }
     
-
-    handleChange = e =>{
-        this.setState({
-            user:{
-                ...this.state.user,
-                [e.target.name]: e.target.value
-            }
-        })
-    }
-
-    handleSubmit = e => {
-        e.preventDefault()
-        fetch(`${baseUrl}/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user: this.state.user})
-        })
-        .then(resp=> resp.json())
-        .then(json => this.renderUser(json))
-    }
-
-    renderUser = (json) =>{
-        if (json.uid){
-            // fix: redux
-            localStorage.setItem('uid', json.uid)
-            document.querySelector('p[name=status]').innerText = 'logged'
-            this.setState({redirect: '/products'})
-        }
-        else{
-            this.setState({errors: json.errors})
-            // fix: show errors from server
-            document.querySelector('p[name=status]').innerText = 'log failed'
-        }
-    }
-
     redirect = () => {
-        if (this.state.redirect){
-            return <Redirect to={this.state.redirect}/>
+        if (this.props.login){
+            return <Redirect to={'/products'}/>
         }
     }
-
+    
     render(){
         return(
             <>
-                <h3>Log In</h3>
-                {/* fix: to stateless */}
-                <form onSubmit={this.handleSubmit}>
-                    <input type='email' name='email' onChange={this.handleChange} value={this.state.user.email}/>
-                    <input type='password' name='password' onChange={this.handleChange} value={this.state.user.password}/>
-                    <input type='submit' />
-                </form>
-                    {this.redirect()}
-                <p name='status'>Log Out</p>
+                <UserForm user={this.state.user} path={this.props.match.path} formText={ {header: 'Log In Your account', submit: 'Log In'}}/>
+                {this.redirect()}
             </>
             
         )
     }
 }
+
+const mapStateToProps = state =>{
+    return {login: state.userReducer.login}
+}
+
+export default connect(mapStateToProps)(Login)

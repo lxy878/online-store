@@ -1,49 +1,45 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
+import {Button, Card} from 'react-bootstrap'
+import {connect} from 'react-redux'
+
+import {fetchUserInfo, updateUser} from '../../actions/userActions'
+import UserUpdateForm from '../../components/userUpdateForm'
 
 class UserInfo extends React.Component {
-    state ={
-        user: {
-            name: 'Nobody',
-            email: 'noemail@nowhere.com',
-            nOrders: 0,
-            nProducts: 0
-        }
-    }
     
     componentDidMount(){
-        this.fetchUserInfo()
-    }
-
-    fetchUserInfo(){
-        const token = localStorage.getItem('uid')
-        fetch(`http://localhost:3000/current_user`, {
-            headers: {
-                'Authorization': token
-            }
-        })
-        .then(resp=> resp.json())
-        // .then(json=> console.log(json))
-        .then(json=> this.getUser(json))
-    }
-    
-    getUser = ({user}) => {
-        this.setState({...this.state.user, user})
+        this.props.fetchUserInfo()
     }
 
     render(){
         return(
-            <div>
-                <p>User Name: {this.state.user.name}</p>
-                <p>Email: {this.state.user.email}</p>
-                <p>Number of Orders: {this.state.user.nOrders}</p>
-                <p>Number of Products: {this.state.user.nProducts}</p>
-                <Button variant='dark' href='/user/edit'>Edit User Information</Button>{' '}
-                <Button variant='dark' href='/user/products'>View Products</Button>{' '}
-                <Button variant='dark' href='/user/orders'>View Orders</Button>
-            </div>
+            <Card style={{width: '30rem'}}>
+                <Card.Body>
+                    <Card.Title>User Information</Card.Title>
+                    <p>Name: {this.props.user.name}</p>
+                    <p>Email: {this.props.user.email}</p>
+                    <p>Number of Orders: {this.props.user.order_count}</p>
+                    <p>Number of Products: {this.props.user.product_count}</p>
+                    <UserUpdateForm path={'/user/edit'} update={this.props.updateUser} user={this.props.user}/>{' '}
+                    <Button variant='dark' href='/user/products'>View Products</Button>{' '}
+                    <Button variant='dark' href='/user/orders'>View Orders</Button>
+                </Card.Body>
+            </Card>
+            
         )
     }
 }
 
-export default UserInfo
+const mapDispatchToProps = dispatch =>{
+    return {
+        fetchUserInfo: () => dispatch(fetchUserInfo()),
+        updateUser: payload => dispatch(updateUser(payload))
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        user: state.userReducer.user
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo)

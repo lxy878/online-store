@@ -6,8 +6,9 @@ import UserRoutes from '../../routes/userRoutes.js'
 export default class UserContainer extends React.Component{
     state={
         dropdownItems: {
-            title: 'User', 
-            items: ['userinfo', 'logout']
+            title: 'User',
+            root: '/user',
+            paths: ['/info', '/products','/orders','/logout']
         }
     }
 

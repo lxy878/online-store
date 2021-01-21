@@ -15,6 +15,14 @@ class ProductsContainer extends React.Component{
             this.props.reload(false)
     }
 
+    renderProductInfo = () =>{
+        return this.props.products < 1 ? 
+            <></> 
+            : (<Col sm={9}>
+                    <Route path={`${this.props.url}/:productId`} render={routerProps=> <Product {...routerProps} products={this.props.products}/>}/>
+                </Col>)
+    }
+
     render(){
         console.log('product container render')
         return (
@@ -23,9 +31,7 @@ class ProductsContainer extends React.Component{
                     <Col sm={3}>
                         <ul><ProductList baseUrl={this.props.url} products={this.props.products}/></ul>
                     </Col>
-                    <Col sm={9}>
-                        <Route path={`${this.props.url}/:productId`} render={routerProps=> <Product {...routerProps} products={this.props.products}/>}/>
-                    </Col>
+                    {this.renderProductInfo()}
                 </Row>
             </>
         )

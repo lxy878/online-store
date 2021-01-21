@@ -1,6 +1,14 @@
-body>#root{
+html, body{
+    height: 100%;
+}
+body > #root {
+    height: 100%;
     background-color: #e9ecef;
 }
+.container-fluid > .card {
+    margin: auto ;
+}
+
 .col-sm-3{
     border-right: 1px solid #dddddd;
 }
