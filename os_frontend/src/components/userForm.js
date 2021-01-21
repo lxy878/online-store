@@ -18,6 +18,7 @@ function UserForm(props){
 
     const handleSubmit = e => {
         e.preventDefault()
+        // Fix: props methods from parents
         if (path === '/login'){
             props.userLogin(user)
         }else if(path === '/register'){
