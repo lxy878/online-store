@@ -11,11 +11,15 @@ class SessionsController < ApplicationController
 
   def get_current_user
     if log_in?
-      data = {name: @current_user.name, email: @current_user.email, nOrders: 0, nProducts: 0}
-      render json: {user: data}.to_json
+      render json: @current_user.to_json(user_option)
     else
       render json: {errors: 'Access Failed'}.to_json
     end
   end
-
+  
+  private
+  def user_option
+    {methods: [:order_count, :product_count], except: [:id, :password_digest,:created_at, :updated_at]}
+  end
+  
 end
