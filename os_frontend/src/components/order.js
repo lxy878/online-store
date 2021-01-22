@@ -14,11 +14,11 @@ function Order (props){
     return (<>
         <Accordion>
             <Card>
-                <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                {/* <Card.Header> */}
+                <Accordion.Toggle as={Button} variant="success" eventKey="0">
                     {order.product.name}
                 </Accordion.Toggle>
-                </Card.Header>
+                {/* </Card.Header> */}
                 <Accordion.Collapse eventKey="0">
                 <Card.Body>
                     <p>Amount: {order.amount}</p>

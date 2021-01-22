@@ -44,9 +44,9 @@ function Product(props){
     const renderButtons = (product)=>{
         if (match.url.includes('user')){
             const totalOrders = product.orders.reduce((sum, order) => sum+order.qty, 0)
-            return (<><button onClick={()=> deleteProduct(product)}>Delete</button>
-                <ProductForm product={product}/>
-                <Button disabled>Ordered {totalOrders}</Button>
+            return (<><Button onClick={()=> deleteProduct(product)}>Delete</Button>{' '}
+                <ProductForm product={product}/>{' '}
+                <Button disabled>Ordered ({totalOrders})</Button>
             </>)
         }else{
             return <><OrderForm addOrder={props.addOrder} product={product}/></>
