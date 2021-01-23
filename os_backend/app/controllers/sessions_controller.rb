@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
       token = token_create({id: user.id})
       render json: {uid: token}.to_json
     else
-      render json: {errors: 'Log in failed'}.to_json
+      render json: {errors: ['Log in failed']}.to_json
     end
   end
 
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     if log_in?
       render json: @current_user.to_json(user_option)
     else
-      render json: {errors: 'Access Failed'}.to_json
+      render json: {errors: ['Access Failed']}.to_json
     end
   end
   

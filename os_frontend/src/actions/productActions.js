@@ -9,18 +9,19 @@ export function fetchProducts(url){
     }
 }
 
-export function addProduct(formData){
+export function addProduct(payload){
     return (dispatch) => {
         fetch(`${baseUrl}/products`, {
             method: 'POST',
             headers: {
-                'Authorization': localStorage.getItem('uid'),
-                'Content-Type': 'application/json'
+                'Authorization': localStorage.getItem('uid')
+                // 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({product: formData})
+            body: payload
         })
         .then(resp => resp.json())
         .then(product=> {
+            // debugger
             if (product.errors){
                 throw Error(product.errors.join('\n'))
             }else{
@@ -31,19 +32,21 @@ export function addProduct(formData){
     }   
 }
 
-export function updateProduct(formData){
+export function updateProduct(payload){
+    // debugger
     return (dispatch) => {
-        fetch(`${baseUrl}/products/${formData.id}`, {
+        fetch(`${baseUrl}/products/${payload.get('id')}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': localStorage.getItem('uid'),
-                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({product: formData})
+            body: payload
         })
         .then(resp => resp.json())
         .then(product=> {
             if (product.errors){
+                debugger
                 throw Error(product.errors.join('\n'))
             }else{
                 dispatch({type:'UPDATE_PRODUCT', product})

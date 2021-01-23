@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
     private
     def authorization_required
         if !log_in?
-            render json: {errors: 'authorization failed'}.to_json
+            render json: {errors: ['authorization failed']}.to_json
         end
     end
 

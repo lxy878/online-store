@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux'
 
@@ -17,6 +17,7 @@ function ProductForm(props){
     }, {})
     
     const [product, setProduct] = useState(reformedData)
+    const fileInput = useRef(null)
 
     const buttonText = product.id ? 'Edit' : 'Create'
 
@@ -29,12 +30,22 @@ function ProductForm(props){
     }
     
     const handleSubmit = () => {
+        const formData = new FormData()
+        formData.append('image', fileInput.current.files[0])
+        Object.keys(product).forEach(key => {
+            if(key === 'category_attributes'){
+                formData.append(key, JSON.stringify(product[key]))
+            }else{
+                formData.append(key, product[key])
+            }
+        })
+        // fix: pass submit method from parent
         if (buttonText === 'Edit'){
-            props.updateProduct(product)
+            props.updateProduct(formData)
         }else{
-            props.addProduct(product)
-
+            props.addProduct(formData)
         }
+        // clean inputs
         setProduct(reformedData)
         handleClose()
     }
@@ -55,7 +66,9 @@ function ProductForm(props){
                         <p>Product Category: <input onChange={handleChange} type='text' name='category_attributes' value={product.category_attributes.name}/></p>
                         <p>Product Qty: <input onChange={handleChange} type='number' name='qty' value={product.qty}/></p>
                         <p>Product Price: <input onChange={handleChange} type='number' name='price' value={product.price}/></p>
+                        {/* fix: add textarea */}
                         <p>Product Description: <input onChange={handleChange} type='text' name='description' value={product.description}/></p>
+                        <p>Product Image: <input type='file' ref={fileInput} name='image' accept='image/*'/></p>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>

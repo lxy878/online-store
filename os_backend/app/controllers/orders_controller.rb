@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
             order.destroy
             render json: {id: id}.to_json
         else
-            render json: {errors: 'Order did not find'}.to_json
+            render json: {errors: ['Order did not find']}.to_json
         end
     end
 

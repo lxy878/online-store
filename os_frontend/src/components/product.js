@@ -6,6 +6,7 @@ import {deleteProduct} from '../actions/productActions'
 import ProductForm from './productForm'
 import {addOrder} from '../actions/orderActions'
 import OrderForm from './orderForm'
+import defaultImage from '../No-image-available.png'
 
 function Product(props){
     const {match, products} = props
@@ -13,20 +14,21 @@ function Product(props){
 
     const renderProduct = () => {
         if (products.length > 0){
+            // fix: ???
             const product = products[match.params.productId]
-            return product ? productInfo(product) : <></>
+            return product ? renderInfo(product) : <></>
         }else return (<></>)
 
     }
-    
-    const productInfo = product => {
+    const renderInfo = (product) => {
         return (
             <>
                <h3>{product.name}</h3>
                <Row>
                 <Col sm={7}>
                         <Figure>
-                            <Figure.Image width={500} height={530} src='https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png'/>
+                            {/* fix: image size */}
+                            <Figure.Image width={500} height={530} src={product.image_url ? product.image_url : defaultImage}/>
                         </Figure>
                 </Col>
                 <Col sm={5}>
