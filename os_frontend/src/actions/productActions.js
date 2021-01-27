@@ -5,7 +5,11 @@ export function fetchProducts(url){
     return (dispatch) => {
         fetch(`${baseUrl}/products`, data)
         .then(resp => resp.json())
-        .then((products)=> dispatch({type:'FETCH_PRODUCTS', products}))
+        .then((products)=> {
+            // debugger 
+            dispatch({type:'FETCH_PRODUCTS', products})
+        })
+        .catch(error => alert(error))
     }
 }
 
@@ -15,7 +19,6 @@ export function addProduct(payload){
             method: 'POST',
             headers: {
                 'Authorization': localStorage.getItem('uid')
-                // 'Content-Type': 'application/json'
             },
             body: payload
         })
@@ -33,20 +36,22 @@ export function addProduct(payload){
 }
 
 export function updateProduct(payload){
-    // debugger
     return (dispatch) => {
         fetch(`${baseUrl}/products/${payload.get('id')}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': localStorage.getItem('uid'),
-                // 'Content-Type': 'application/json'
             },
             body: payload
         })
-        .then(resp => resp.json())
-        .then(product=> {
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
+        .then(product=> {     
             if (product.errors){
-                debugger
                 throw Error(product.errors.join('\n'))
             }else{
                 dispatch({type:'UPDATE_PRODUCT', product})

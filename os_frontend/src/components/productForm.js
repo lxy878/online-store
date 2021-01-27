@@ -1,87 +1,102 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import {Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 import {addProduct, updateProduct} from '../actions/productActions'
 
-function ProductForm(props){
-    const [show, setShow] = useState(false)
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
+class ProductForm extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            product: {
+                name: '',
+                category_attributes: {name: ''},
+                qty: 0,
+                price: 0.00,
+                description: ''
+            },
+            show: false,
+            fileInput: React.createRef()
+        }
+    }
 
-    // restore existing data to submit form
-    const reformedData = Object.keys(props.product).reduce((acc, key)=> {
-        return key === 'category' ?
-            {...acc, [`${key}_attributes`]: props.product[key]}
-            : {...acc, [key]:props.product[key]}
-    }, {})
-    
-    const [product, setProduct] = useState(reformedData)
-    const fileInput = useRef(null)
+    handleClose = () => this.setState({...this.state, show: false})
+    handleShow = () => this.setState({...this.state, show: true})
+    componentDidMount(){
+        this.setState({...this.state, product: this.props.product})
+    }
 
-    const buttonText = product.id ? 'Edit' : 'Create'
+    buttonText = () => this.state.product.id ? 'Edit' : 'Create'
 
-    const handleChange = e => {
-        const value = (e.target.name === 'category_attributes') ? {name: e.target.value} : e.target.value
-        setProduct({
-            ...product,
-            [e.target.name] : value
+    handleChange = e => {
+        const value = e.target.name === 'category_attributes' ? {name: e.target.value} : e.target.value
+        this.setState({
+            ...this.state,
+            product:{
+                ...this.state.product,
+                [e.target.name] : value
+            }
         })
     }
     
-    const handleSubmit = () => {
+    handleSubmit = e => {
         const formData = new FormData()
-        formData.append('image', fileInput.current.files[0])
-        Object.keys(product).forEach(key => {
+        const imageFile = this.state.fileInput.current.files[0]
+        if (imageFile) {
+            formData.append('image', imageFile)
+        }
+        Object.keys(this.state.product).forEach(key => {
             if(key === 'category_attributes'){
-                formData.append(key, JSON.stringify(product[key]))
+                formData.append(key, JSON.stringify(this.state.product[key]))
             }else{
-                formData.append(key, product[key])
+                formData.append(key, this.state.product[key])
             }
         })
         // fix: pass submit method from parent
-        if (buttonText === 'Edit'){
-            props.updateProduct(formData)
+        if (this.buttonText() === 'Edit'){
+            this.props.updateProduct(formData)
         }else{
-            props.addProduct(formData)
+            this.props.addProduct(formData)
         }
-        // clean inputs
-        setProduct(reformedData)
-        handleClose()
+        // clean inputs && remove previous inputs
+        this.setState({...this.state})
+        this.handleClose()
     }
 
-    return (
-        <>
-            <Button variant="primary" onClick={handleShow}>
-                {buttonText}
-            </Button>
-    
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header >
-                    <Modal.Title>{buttonText} a Product </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form >
-                        <p>Product Name: <input onChange={handleChange} type='text' name='name' value={product.name}/></p>
-                        <p>Product Category: <input onChange={handleChange} type='text' name='category_attributes' value={product.category_attributes.name}/></p>
-                        <p>Product Qty: <input onChange={handleChange} type='number' name='qty' value={product.qty}/></p>
-                        <p>Product Price: <input onChange={handleChange} type='number' name='price' value={product.price}/></p>
-                        {/* fix: add textarea */}
-                        <p>Product Description: <input onChange={handleChange} type='text' name='description' value={product.description}/></p>
-                        <p>Product Image: <input type='file' ref={fileInput} name='image' accept='image/*'/></p>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        {buttonText}
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    )
+    render(){
+        return (
+            <>
+                <Button variant="primary" onClick={this.handleShow}>
+                    {this.buttonText()}
+                </Button>
+        
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header >
+                        <Modal.Title>{this.buttonText()} a Product </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form>
+                            <p>Product Name: <input onChange={this.handleChange} type='text' name='name' value={this.state.product.name}/></p>
+                            <p>Product Category: <input onChange={this.handleChange} type='text' name='category_attributes' value={this.state.product.category_attributes.name}/></p>
+                            <p>Product Qty: <input onChange={this.handleChange} type='number' name='qty' value={this.state.product.qty}/></p>
+                            <p>Product Price: <input onChange={this.handleChange} type='number' name='price' value={this.state.product.price}/></p>
+                            {/* fix: add textarea */}
+                            <p>Product Description: <input onChange={this.handleChange} type='text' name='description' value={this.state.product.description}/></p>
+                            <p>Product Image: <input type='file' ref={this.state.fileInput} name='image' accept='image/*'/></p>
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Cancel
+                        </Button>
+                        <Button variant="primary" onClick={this.handleSubmit}>
+                            {this.buttonText()}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        )
+    }
 }
 
 const mapDispatchToProps = dispatch => {

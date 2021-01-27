@@ -21,6 +21,7 @@ function Product(props){
 
     }
     const renderInfo = (product) => {
+        console.log(product)
         return (
             <>
                <h3>{product.name}</h3>
@@ -28,11 +29,11 @@ function Product(props){
                 <Col sm={7}>
                         <Figure>
                             {/* fix: image size */}
-                            <Figure.Image width={500} height={530} src={product.image_url ? product.image_url : defaultImage}/>
+                            <Figure.Image width={500} height={530} src={product.image_path ? `http://localhost:3000/${product.image_path}` : defaultImage}/>
                         </Figure>
                 </Col>
                 <Col sm={5}>
-                        <p>Category: {product.category.name}</p>
+                        <p>Category: {product.category_attributes.name}</p>
                         <p>Price: ${product.price}</p>
                         <p>Qty: {product.qty}</p>
                         {renderButtons(product)}

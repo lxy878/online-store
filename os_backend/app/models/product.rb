@@ -13,15 +13,26 @@ class Product < ApplicationRecord
     def category_attributes=(attributes_string)
         attributes = JSON.parse(attributes_string)
         if category = Category.find_by(attributes)
-            self.category = category
+            self.category= category
         else
             # Note: do not use build_category because category won't save
             self.create_category(attributes)
         end
     end
 
-    # testing the method
+    def category_attributes
+        {name: self.category.name}
+    end
+
     def image_path
-        Rails.application.routes.url_helpers.rails_blob_path(self.avatar, only_path: true)
+        if self.image.attached?
+            self.image_url = Rails.application.routes.url_helpers.rails_blob_path(self.image, only_path: true)
+            self.save
+        end
+        self.image_url
+    end
+
+    def orders_amounts
+        
     end
 end

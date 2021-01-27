@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
         
         if new_order.save
             product = new_order.update_product(new_order.qty)
-            render json: product.to_json(json_option)
+            render json: product.to_json(product_option)
         else
             render json: {errors: new_order.errors.full_messages}.to_json 
         end
@@ -32,8 +32,8 @@ class OrdersController < ApplicationController
         params.require(:order).permit(:product_id, :qty, :amount)
     end
 
-    def json_option
-        {include: {category: {only: [:name]}}, except: [:user_id, :category_id, :created_at, :updated_at]}
+    def product_option
+        {include: {orders: {only: [:qty]}}, methods: [:image_path, :category_attributes], except: [:user_id, :category_id,:created_at, :updated_at]}
     end
 
     def orders_option
