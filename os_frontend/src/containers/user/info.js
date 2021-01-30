@@ -3,7 +3,7 @@ import {Button, Card} from 'react-bootstrap'
 import {connect} from 'react-redux'
 
 import {fetchUserInfo, updateUser} from '../../actions/userActions'
-import UserUpdateForm from '../../components/userUpdateForm'
+import UserUpdateForm from '../../components/user/updateForm'
 
 class UserInfo extends React.Component {
     
@@ -20,7 +20,7 @@ class UserInfo extends React.Component {
                     <p>Email: {this.props.user.email}</p>
                     <p>Number of Orders: {this.props.user.order_count}</p>
                     <p>Number of Products: {this.props.user.product_count}</p>
-                    <UserUpdateForm path={'/user/edit'} update={this.props.updateUser} user={this.props.user}/>{' '}
+                    <UserUpdateForm updateMethod={this.props.updateUser} user={this.props.user}/>{' '}
                     <Button variant='dark' href='/user/products'>View Products</Button>{' '}
                     <Button variant='dark' href='/user/orders'>View Orders</Button>
                 </Card.Body>

@@ -1,9 +1,5 @@
 const baseUrl = 'http://localhost:3000'
 
-export const addUserinfo = (data) =>{
-    return {type: 'something', data}
-}
-
 export function createUser(payload){
     return dispatch => {
         fetch(`${baseUrl}/users`, {
@@ -11,13 +7,17 @@ export function createUser(payload){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({user: payload})
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(user => {
             if (user.errors){
                 throw Error(user.errors.join('\n'))
             }else{
-                localStorage.setItem('uid', user.uid)
-                dispatch({type: 'CREATE_USER'})
+                dispatch({type: 'CREATE_USER', user})
             }
             
         })
@@ -32,13 +32,17 @@ export function userLogin(payload){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({user: payload})
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(user => {
             if (user.errors){
                 throw Error(user.errors.join('\n'))
             }else{
-                localStorage.setItem('uid', user.uid)
-                dispatch({type: 'USER_LOGIN'})
+                dispatch({type: 'USER_LOGIN', user})
             }
             
         })
@@ -53,7 +57,12 @@ export function fetchUserInfo(){
                 'Authorization': localStorage.getItem('uid')
             }
         })
-        .then(resp=> resp.json())
+        .then(resp=> {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(user=>{
             if (user.errors){
                 throw Error(user.errors.join('\n'))
@@ -76,7 +85,12 @@ export function updateUser(payload){
             },
             body: JSON.stringify({user: payload})
         })
-        .then(resp=> resp.json())
+        .then(resp=> {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(user => {
             if (user.errors){
                 throw Error(user.errors.join('\n'))
