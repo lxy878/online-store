@@ -1,10 +1,10 @@
 import React from 'react'
-import {fetchOrders} from '../../actions/orderActions'
+import {fetchOrders, removeOrder} from '../../actions/orderActions'
 import {connect} from 'react-redux'
 import Order from '../../components/order/order'
 
 class OrdersContrainer extends React.Component{
-    
+
     componentDidMount(){
         this.props.fetchOrders()
     }
@@ -12,14 +12,15 @@ class OrdersContrainer extends React.Component{
     render(){
         return (<>
             <h3>{`${localStorage.getItem('name')}'s `}orders </h3>
-            {this.props.orders.map(order => <Order key={order.id} order={order}/>)}
+            {this.props.orders.map(order => <Order key={order.id} order={order} removeOrder={this.props.removeOrder}/>)}
         </>)
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrders: () => dispatch(fetchOrders())
+        fetchOrders: () => dispatch(fetchOrders()),
+        removeOrder: payload => dispatch(removeOrder(payload))
     }
 }
 const mapStateToProps = state => {

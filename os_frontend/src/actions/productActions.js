@@ -1,12 +1,16 @@
 const baseUrl = 'http://localhost:3000'
 
 export function fetchProducts(url){
-    const data = (url === '/user/products') ? {headers: {'Authorization': localStorage.getItem('uid')}} : {}
+    const data = url.includes('/user/') ? {headers: {'Authorization': localStorage.getItem('uid')}} : {}
     return (dispatch) => {
         fetch(`${baseUrl}/products`, data)
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then((products)=> {
-            // debugger 
             dispatch({type:'FETCH_PRODUCTS', products})
         })
         .catch(error => alert(error))
@@ -22,9 +26,13 @@ export function addProduct(payload){
             },
             body: payload
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(product=> {
-            // debugger
             if (product.errors){
                 throw Error(product.errors.join('\n'))
             }else{
@@ -72,7 +80,12 @@ export function deleteProduct(formData){
                 'Content-Type': 'application/json'
             }
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(product=> {
             if (product.errors){
                 throw Error(product.errors.join('\n'))

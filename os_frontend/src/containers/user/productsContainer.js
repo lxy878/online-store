@@ -1,10 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import ProductForm from '../../components/product/productForm.js'
 import ProductsContainer from '../productsContainer.js'
+import {addProduct} from '../../actions/productActions'
 
-export default function UserProductsContainer(props){
-    const {match, reload} = props
+function UserProductsContainer(props){
+    const {match, reload, addProduct} = props
     const product = {
         name: '',
         category_attributes: {name: ''},
@@ -14,8 +16,12 @@ export default function UserProductsContainer(props){
     }
     
     return (<>
-        <ProductForm product={product}/>
+        <ProductForm product={product} submitMethod={addProduct}/>
         <ProductsContainer match={match} reload={reload}/>
     </>)
     
 }
+
+const mapDispatchToProps = dispatch => ({addProduct: payload => dispatch(addProduct(payload))})
+
+export default connect(null, mapDispatchToProps)(UserProductsContainer)
