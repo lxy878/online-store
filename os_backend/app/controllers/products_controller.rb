@@ -5,18 +5,18 @@ class ProductsController < ApplicationController
         if log_in?
             products = @current_user.products
             # add number of ordered product
-            render json: products.to_json(json_option)
+            render json: products.to_json(user_product_option)
         else
             products = Product.all
             # orders remove
-            render json: products.to_json(json_option)
+            render json: products.to_json(products_option)
         end
     end
 
     def create
         newProduct = @current_user.products.new(product_params)
         if newProduct.save
-            render json: newProduct.to_json(json_option)
+            render json: newProduct.to_json(user_product_option)
         else
             render json: {errors: newProduct.errors.full_messages}.to_json
         end
@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
     def update
         if product = @current_user.products.find_by(id: params[:id])
             if product.update(product_params)
-                render json: product.to_json(json_option)
+                render json: product.to_json(user_product_option)
             else
                 render json: {errors: product.errors.full_messages}.to_json
             end
@@ -54,8 +54,11 @@ class ProductsController < ApplicationController
         params.permit(:name, :description, :price, :qty, :category_attributes, :image)
     end
 
-    def json_option
-        # fix: order counts
+    def products_option
+        {methods: [:image_path, :category_attributes], except: [:user_id, :category_id,:created_at, :updated_at]}
+    end
+
+    def user_product_option
         {include: {orders: {only: [:qty]}}, methods: [:image_path, :category_attributes], except: [:user_id, :category_id,:created_at, :updated_at]}
     end
 end

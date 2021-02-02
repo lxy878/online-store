@@ -1,8 +1,8 @@
 class Product < ApplicationRecord
     belongs_to :user
     belongs_to :category
-    has_many :orders
-    has_one_attached :image
+    has_many :orders, dependent: :destroy
+    has_one_attached :image, dependent: :destroy
 
     # Note: validating category_id to prevent category as nil
     validates :name, :category_id, presence: true
@@ -25,14 +25,7 @@ class Product < ApplicationRecord
     end
 
     def image_path
-        if self.image.attached?
-            self.image_url = Rails.application.routes.url_helpers.rails_blob_path(self.image, only_path: true)
-            self.save
-        end
-        self.image_url
+        Rails.application.routes.url_helpers.rails_blob_path(self.image, only_path: true)  if self.image.attached?
     end
 
-    def orders_amounts
-        
-    end
 end

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     newUser = User.new(user_params)
     if newUser.save
       token = token_create({id: newUser.id})
-      render json: {uid: token}.to_json
+      render json: {uid: token, name: newUser.name}.to_json
     else
       render json: {errors: newUser.errors.full_messages}.to_json
     end

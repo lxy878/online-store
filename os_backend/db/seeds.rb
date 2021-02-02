@@ -39,7 +39,7 @@ products = [
         price: 57.99, 
         qty: 10,
         description: '5 Drawer fabric storage organizer for closets, bedrooms, playrooms, and more. Sturdy steel frame wood top with smooth finish. Soft fabric drawers with Easy pull-out fabric handles. Adjustable-height plastic feet to prevent wobbling and floor damage',
-        category: categories[1],
+        category: categories[2],
         user: users[0]
         # , image_url: 'https://images-na.ssl-images-amazon.com/images/I/91Uqv-cDZBL._AC_SX679_.jpg'
     },
@@ -48,7 +48,7 @@ products = [
         price: 29.50, 
         qty: 0,
         description: 'BEST SELLING DRIED FRUIT AND NUTS GIFT ARRANGMENT: WOW your guests with our signature Oh! Nuts Gift box filled to the brim with "12" varieties of healthy goodies. The lidded container is features an assortment of twelve HIGH-QUALITY GRADE A DRIED FRUITS AND NUTS. Replace the traditional candy, chocolates, and baked goods with healthier, trendier vegan treats. PRESENT A GIFT THAT LEAVES A MEMORABLE IMPRESSION.',
-        category: categories[2],
+        category: categories[1],
         user: users[3]
         # , image_url: 'https://images-na.ssl-images-amazon.com/images/I/A1xrmY8UVJL._SL1500_.jpg'
     },
