@@ -1,24 +1,17 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Card, Accordion, Button} from 'react-bootstrap'
 
-import {removeOrder} from '../actions/orderActions'
-
 function Order (props){
-    const {order} = props
+    const {order, removeOrder} = props
     
-    const handleClick = () =>{
-        props.removeOrder({orderId: order.id})
-    }
-
+    const handleClick = () => removeOrder({orderId: order.id})
+    
     return (<>
         <Accordion>
             <Card>
-                {/* <Card.Header> */}
                 <Accordion.Toggle as={Button} variant="success" eventKey="0">
                     {order.product.name}
                 </Accordion.Toggle>
-                {/* </Card.Header> */}
                 <Accordion.Collapse eventKey="0">
                 <Card.Body>
                     <p>Amount: {order.amount}</p>
@@ -33,9 +26,4 @@ function Order (props){
     </>)
 }
 
-const mapDispatchToProps = dispatch =>{
-    return {
-        removeOrder: payload => dispatch(removeOrder(payload))
-    }
-}
-export default connect(null, mapDispatchToProps)(Order)
+export default Order

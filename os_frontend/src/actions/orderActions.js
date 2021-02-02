@@ -10,7 +10,12 @@ export function addOrder(payload){
             },
             body: JSON.stringify({order: payload})
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(product=> {
             if(product.errors){
                 throw Error(product.errors.join('\n'))
@@ -28,14 +33,14 @@ export function fetchOrders(){
             method: 'GET',
             headers: {'Authorization': localStorage.getItem('uid')}
         })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(orders=> {
-            // add current user's orders to reduce
-            // if(products.errors){
-            //     throw Error(products.errors.join('\n'))
-            // }else{
-        dispatch({type: 'FETCH_ORDERS', orders})
-            // }
+            dispatch({type: 'FETCH_ORDERS', orders})
         })
         .catch(errors => alert(errors.message))
     }
@@ -50,7 +55,12 @@ export function removeOrder(payload){
                 'Authorization': localStorage.getItem('uid')
             }
         })
-        .then(resp=> resp.json())
+        .then(resp=> {
+            if (!resp.ok){
+                throw Error(resp.statusText)
+            }
+            return resp.json()
+        })
         .then(order=>{
             if(order.errors){
                 throw Error(order.errors.join('\n'))
