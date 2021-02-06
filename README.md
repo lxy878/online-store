@@ -1,6 +1,6 @@
 # Online Store
 
-Online Store is the final project for the full-stack engineer program in Flatiron School.  The web application is an e-commerce for anyone, who sells their creatative products and who purchases some unique goods.  In Online Store, a user account has a secured authentication and authorization of managing their products information including qty, descriptions, etc.  Also, the account allows to purchase others' products, view the orders and cancel the orders.
+Online Store is the final project for the full-stack engineer program in Flatiron School. The web application is e-commerce for anyone who sells their creative products and who purchases some unique goods. In Online Store, a user account has a secured authentication and authorization of managing their product information, including qty, descriptions, etc. Also, the account allows to purchase others' products, view the orders, and cancel the orders.
 
 # Screenshots/Demo
 
