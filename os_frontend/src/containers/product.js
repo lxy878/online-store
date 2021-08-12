@@ -2,13 +2,14 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Figure, Col, Row, Button} from 'react-bootstrap'
 
-import {deleteProduct, updateProduct} from '../../actions/productActions'
-import ProductForm from './productForm'
-import {addOrder} from '../../actions/orderActions'
-import OrderForm from '../order/orderForm'
-import defaultImage from '../../No-image-available.png'
+import {deleteProduct, updateProduct} from '../actions/productActions'
+// import ProductForm from './productForm'
+import {addOrder} from '../actions/orderActions'
+// import OrderForm from '../order/orderForm'
+// import defaultImage from '../../No-image-available.png'
 
 function Product(props){
+    
     const {match, products, updateProduct} = props
     const deleteProduct = (product) => props.deleteProduct({id: product.id})
     const renderProduct = () => {
@@ -60,8 +61,6 @@ function Product(props){
     
 }
 
-const mapStateToProps = state => ({ products: state.productReducer.products })
-
 const mapDispatchToProps = dispatch => {
     return {
         deleteProduct: payload => dispatch(deleteProduct(payload)),
@@ -70,4 +69,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product)
+export default connect(null, mapDispatchToProps)(Product)
