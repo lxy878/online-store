@@ -3,6 +3,7 @@ import Navbar from '../../components/nav/navbar'
 import GuestRoutes from '../../routes/guestRoutes.js'
 
 import Container from 'react-bootstrap/Container'
+import { Route, Switch } from 'react-router'
 
 export default function GuestContainer({reload}){
 
@@ -16,7 +17,7 @@ export default function GuestContainer({reload}){
         <Navbar dropdownItems={dropdownItems}/> 
         <Container fluid>
             <GuestRoutes reload={reload}/>
-        </Container>    
+        </Container>   
     </>)
     
 }
