@@ -6,7 +6,9 @@ Online Store is the final project for the full-stack engineer program in Flatiro
 
 <a href='https://drive.google.com/file/d/1Zfon1Vj3uHVKxPuS-f2ywF7TkXwWxqPq/view?usp=sharing'>demo</a>
 
-![Demo](https://drive.google.com/file/d/1Zfon1Vj3uHVKxPuS-f2ywF7TkXwWxqPq/view?usp=sharing)
+<iframe src="https://drive.google.com/file/d/1Zfon1Vj3uHVKxPuS-f2ywF7TkXwWxqPq/view?usp=sharing">Demo</iframe>
+
+<image >
 
 # Tech/framework used
 
